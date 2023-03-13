@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+  <!-- Offcanvas Inbox Selection-->
+  <div id="inboxes" class="offcanvas offcanvas-start" tabindex="-1">
+
+    <!-- Header -->
+    <div class="offcanvas-header">
+
+      <!-- Hamburger Icon -->
+      <div id="hamburger" class="col col-2 align-content-center justify-content-center hamburger" data-bs-dismiss="offcanvas" data-bs-target="#inboxes">
+        <i id="hamburger-icon" class="bi bi-x "></i>
+      </div>
+
+    </div>
+
+    <!-- Body -->
+    <div class="offcanvas-body">
+
+      <!-- Compose Button -->
+     <button id="btn-compose" type="button" class="btn" data-bs-toggle="offcanvas" data-bs-target="#compose">Compose</button>
+
+     <!-- Tabs -->
+     <div id="btn-inbox-container">
+
+       <button type="button" class="btn btn-inbox" data-bs-dismiss="offcanvas" data-bs-target="#inboxes">
+        <i class="bi bi-inbox"></i>
+        <span>Inbox</span>
+       </button>
+
+       <button type="button" class="btn btn-inbox selected" data-bs-dismiss="offcanvas" data-bs-target="#inboxes">
+        <i class="bi bi-star"></i>
+        <span>Starred</span>
+       </button>
+
+       <button type="button" class="btn btn-inbox" data-bs-dismiss="offcanvas" data-bs-target="#inboxes">
+        <i class="bi bi-exclamation-circle"></i>
+        <span>Important</span>
+       </button>
+
+       <button type="button" class="btn btn-inbox" data-bs-dismiss="offcanvas" data-bs-target="#inboxes">
+        <i class="bi bi-file-earmark"></i>
+        <span>Drafts</span>
+       </button>
+
+       <button type="button" class="btn btn-inbox" data-bs-dismiss="offcanvas" data-bs-target="#inboxes">
+        <i class="bi bi-exclamation-octagon"></i>
+        <span>Spam</span>
+       </button>
+
+       <button type="button" class="btn btn-inbox" data-bs-dismiss="offcanvas" data-bs-target="#inboxes">
+        <i class="bi bi-trash3"></i>
+        <span>Trash</span>
+       </button>
+
+     </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Offcanvas Compose -->
+  <div id="compose" class="offcanvas offcanvas-bottom" tabindex="-1">
+
+    <!-- Header -->
+    <div class="offcanvas-header">
+
+      <!-- Button When Small Screen -->
+      <button id="close-compose" type="button" class="btn d-sm-none" data-bs-dismiss="offcanvas" data-bs-target="#compose">
+        <i id="back-mail-icon" class="bi bi-chevron-left"></i>
+        Mail
+      </button>
+      
+      <!-- Button When Larger Screen -->
+      <button id="close-compose-desktop" type="button" class="btn d-none d-sm-block" data-bs-dismiss="offcanvas" data-bs-target="#compose">
+        <i id="back-mail-icon" class="bi bi-chevron-left"></i>
+        Close
+      </button>
+      
+    </div>
+
+    <!-- Body -->
+    <div class="offcanvas-body">
+
+      <div id="compose-container" class="container">
+
+        <div class="row">
+          <input id="compose-to" type="text" class="compose-input" placeholder="To">
+        </div>
+
+        <div class="row">
+          <input id="compose-subject" type="text" class="compose-input" placeholder="Subject">
+        </div>
+
+        <div class="row">
+          <div id="compose-body" contenteditable="" class="compose-input"></div>
+        </div>
+
+        <div class="row">
+          <button id="compose-send" type="button" class="btn" data-bs-dismiss="offcanvas" data-bs-target="#compose">
+            Send
+            <i id="back-mail-icon" class="bi bi-send"></i>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Offcanvas Content -->
+  <div id="content-offcanvas" class="offcanvas offcanvas-bottom d-sm-none" tabindex="-1">
+
+    <!-- Header -->
+    <div class="offcanvas-header">
+
+      <!-- Button When Small Screen -->
+      <button id="close-content-offcanvas" type="button" class="btn" data-bs-dismiss="offcanvas" data-bs-target="#content-offcanvas">
+        <i id="back-mail-icon" class="bi bi-chevron-left"></i>
+        Mail
+      </button>
+      
+    </div>
+
+    <!-- Body -->
+    <div class="offcanvas-body">
+
+    </div>
+
+  </div>
+
+  <!-- Container -->
+  <div id="container" class="container-fluid">
+      <!-- Header -->
+      <div id="header" class="row d-sm-none align-content-center">
+
+          <div id="hamburger" class="col col-2 align-content-center justify-content-center hamburger" data-bs-toggle="offcanvas" data-bs-target="#inboxes">
+            <i id="hamburger-icon" class="bi bi-list"></i>
+          </div>
+
+      </div>
+
+      <!-- Main content -->
+      <div id="main" class="row">
+
+          <!-- Sidebar -->
+          <div id="sidebar" class="col col-sm-1 col-lg-2 d-none d-sm-block">
+            <div class="content">
+
+            
+            <div id="hamburger" class="hamburger d-lg-none">
+              <i id="hamburger-icon" class="bi bi-list"></i>
+            </div>
+
+            <button id="btn-compose" type="button" class="btn btn-inbox selected-constant" data-bs-toggle="offcanvas" data-bs-target="#compose">
+              <i class="bi bi-plus-lg" style="font-weight: 900;"></i>
+              <span>Compose</span>
+            </button>
+
+            <button type="button" class="btn btn-inbox">
+              <i class="bi bi-inbox"></i>
+              <span>Inbox</span>
+            </button>
+             
+            <button type="button" class="btn btn-inbox selected">
+              <i class="bi bi-star"></i>
+              <span>Starred</span>
+            </button>
+             
+            <button type="button" class="btn btn-inbox">
+              <i class="bi bi-exclamation-circle"></i>
+              <span>Important</span>
+            </button>
+             
+            <button type="button" class="btn btn-inbox">
+              <i class="bi bi-file-earmark"></i>
+              <span>Drafts</span>
+            </button>
+             
+            <button type="button" class="btn btn-inbox">
+              <i class="bi bi-exclamation-octagon"></i>
+              <span>Spam</span>
+            </button>
+             
+            <button type="button" class="btn btn-inbox">
+              <i class="bi bi-trash3"></i>
+              <span>Trash</span>
+             </button>
+
+            </div>
+            
+          </div>
+
+          <!-- Emails Container -->
+          <div id="messages" class="col col-12 col-sm-4 col-lg-4">
+
+              <!-- Emails -->
+              <div class="row message">
+                <div class="message-header">
+                  <span class="message-sender"></span>
+                  <span class="message-separator">•</span>
+                  <span class="message-subject"></span>
+                </div>
+                <div class="message-preview">
+                  <span class="message-preview-content">
+                    
+                  </span>
+                </div>
+              </div>
+              
+              <div class="row message selected" data-example="true">
+                <div class="message-header">
+                  <span class="message-sender">LinkedIn</span>
+                  <span class="message-separator">•</span>
+                  <span class="message-subject">Connection Request</span>
+                </div>
+                <div class="message-preview">
+                  <span class="message-preview-content">
+                    You have a new Connection request test You have a new Connection request test You have a new Connection request test You have a new Connection request test
+                  </span>
+                </div>
+              </div>
+              
+              <div class="row message">
+                <div class="message-header">
+                  <span class="message-sender"></span>
+                  <span class="message-separator">•</span>
+                  <span class="message-subject"></span>
+                </div>
+                <div class="message-preview">
+                  <span class="message-preview-content">
+                    
+                  </span>
+                </div>
+              </div>
+
+              <div class="row message">
+                <div class="message-header">
+                  <span class="message-sender"></span>
+                  <span class="message-separator">•</span>
+                  <span class="message-subject"></span>
+                </div>
+                <div class="message-preview">
+                  <span class="message-preview-content">
+                    
+                  </span>
+                </div>
+              </div>
+
+              <div class="row message">
+                <div class="message-header">
+                  <span class="message-sender"></span>
+                  <span class="message-separator">•</span>
+                  <span class="message-subject"></span>
+                </div>
+                <div class="message-preview">
+                  <span class="message-preview-content">
+                    
+                  </span>
+                </div>
+              </div>
+
+              <div class="row message">
+                <div class="message-header">
+                  <span class="message-sender"></span>
+                  <span class="message-separator">•</span>
+                  <span class="message-subject"></span>
+                </div>
+                <div class="message-preview">
+                  <span class="message-preview-content">
+                    
+                  </span>
+                </div>
+              </div>
+
+          </div>
+          
+          <!-- Email Content -->
+          <div id="content" class="col-sm-7 col-lg-6 d-none d-sm-block">
+            <div class="container">
+              <div class="row content-subject">Connection Request</div>
+              <div class="row content-to">To: me</div>
+              <div class="row content-from">From: noreply@linkedin.com</div>
+              <div class="row content-body">
+                You Have A New Connection Request!
+              </div>
+              <div class="row content-send">
+                <input type="text" placeholder="Reply" class="content-reply">
+                <i class="bi bi-send-fill"></i>
+              </div>
+            </div>
+          </div>
+
+      </div>
+
+  </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>
