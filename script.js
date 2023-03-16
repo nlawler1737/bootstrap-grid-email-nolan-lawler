@@ -82,7 +82,12 @@ hamburger.onclick = openCloseSidebar
 
 document.querySelectorAll(".message:not([data-example])").forEach(createEmail)
 
-document.querySelector(".message[data-example]").email = new Email(document.querySelector(".message[data-example]"),"Connection Request","LinkedIn","You Have A New Connection Request!", "noreply@linkedin.com")
+document.querySelector(".message[data-example]").email = new Email (
+    document.querySelector(".message[data-example]"),
+    "Connection Request","LinkedIn",
+    "You Have A New Connection Request!",
+    "noreply@linkedin.com"
+)
 
 copyContentToOffcanvas()
 
@@ -106,16 +111,19 @@ function clearCompose() {
 function searchMessages() {
 
     const text = searchContent.value
+    let hasMatch = false
     messagesArr.forEach(e=>{
         const content = {...e.email}
         delete content.target
-        console.log(Object.values(content))
         if (!text || Object.values(content).some(t=>t.match(new RegExp(text,"gi")))) {
             e.style.display = "flex"
+            hasMatch = true
         } else {
             e.style.display = "none"
         }
     })
+    if (!hasMatch) noMatches.style.display = "flex"
+    else noMatches.style.display = "none"
 }
 
 function clearReply() {
