@@ -5,8 +5,8 @@ const contentOffcanvas = document.querySelector("#content-offcanvas")
 const sidebar = document.querySelector("#sidebar")
 const content = document.querySelector("#content")
 const hamburger = document.querySelector("#sidebar #hamburger")
-const replyBtn = document.querySelector(".content-send i")
-const replyContent = document.querySelector(".content-send .content-reply")
+const replyBtn = document.querySelectorAll(".content-send i")
+const replyContent = document.querySelectorAll(".content-send .content-reply")
 
 class Email {
     #sender
@@ -70,7 +70,11 @@ inboxTabsArr.forEach(function (tab) {
     tab.onclick = () => setSelectedInbox(tab)
 })
 
-replyBtn.onclick = clearReply
+replyBtn.forEach((e,i)=>{
+    e.onclick = function() {
+        clearReply(replyContent[i])
+    }
+})
 
 document.querySelector("#compose-send").onclick = clearCompose
 
@@ -84,6 +88,7 @@ copyContentToOffcanvas()
 
 
 function setSelectedMessage(message) {
+    clearReply(replyContent[1])
     messagesArr.forEach(e=>e.classList.remove("selected"))
     message.classList.add("selected")
 }
@@ -98,8 +103,8 @@ function clearCompose() {
     document.querySelector("#compose-body").innerText = ""
 }
 
-function clearReply() {
-    replyContent.value = ""
+function clearReply(e) {
+    e.value = ""
 }
 
 function openCloseSidebar() {
