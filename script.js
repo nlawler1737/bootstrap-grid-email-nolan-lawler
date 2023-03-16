@@ -5,14 +5,17 @@ const contentOffcanvas = document.querySelector("#content-offcanvas")
 const sidebar = document.querySelector("#sidebar")
 const content = document.querySelector("#content")
 const hamburger = document.querySelector("#sidebar #hamburger")
-const replyBtn = document.querySelectorAll(".content-send i")
-const replyContent = document.querySelectorAll(".content-send .content-reply")
+const replyBtn = document.querySelector(".content-send i")
+const replyContent = document.querySelector(".content-send .content-reply")
+const searchContent = document.querySelector(".search-bar .search-bar-content")
+const noMatches = document.querySelector("#no-search-match")
+
 
 class Email {
     #sender
     #subject
     #content
-    constructor(target,subject,from,body,email) {
+    constructor(target,subject,from,body,email="") {
         this.target = target
         this.subject = subject
         this.from = from
@@ -64,17 +67,14 @@ if (window.innerWidth < 576) {
 messagesArr.forEach(function (message) {
     message.onclick = () => setSelectedMessage(message)
 })
-// messagesArr.forEach(e=>e.innerText = "Example")
 
 inboxTabsArr.forEach(function (tab) {
     tab.onclick = () => setSelectedInbox(tab)
 })
 
-replyBtn.forEach((e,i)=>{
-    e.onclick = function() {
-        clearReply(replyContent[i])
-    }
-})
+replyBtn.onclick = clearReply
+
+searchContent.addEventListener("input",searchMessages)
 
 document.querySelector("#compose-send").onclick = clearCompose
 
@@ -82,7 +82,7 @@ hamburger.onclick = openCloseSidebar
 
 document.querySelectorAll(".message:not([data-example])").forEach(createEmail)
 
-new Email(document.querySelector(".message[data-example]"),"Connection Request","LinkedIn","You Have A New Connection Request!", "noreply@linkedin.com")
+document.querySelector(".message[data-example]").email = new Email(document.querySelector(".message[data-example]"),"Connection Request","LinkedIn","You Have A New Connection Request!", "noreply@linkedin.com")
 
 copyContentToOffcanvas()
 
@@ -103,8 +103,23 @@ function clearCompose() {
     document.querySelector("#compose-body").innerText = ""
 }
 
-function clearReply(e) {
-    e.value = ""
+function searchMessages() {
+
+    const text = searchContent.value
+    messagesArr.forEach(e=>{
+        const content = {...e.email}
+        delete content.target
+        console.log(Object.values(content))
+        if (!text || Object.values(content).some(t=>t.match(new RegExp(text,"gi")))) {
+            e.style.display = "flex"
+        } else {
+            e.style.display = "none"
+        }
+    })
+}
+
+function clearReply() {
+    replyContent.value = ""
 }
 
 function openCloseSidebar() {
@@ -138,12 +153,12 @@ function addRemoveContentOpen(val) {
 }
 
 function createEmail(target) {
-    new Email(
+    target.email = new Email (
         target,
         randomLorem(rand(1,4)),
         randomLorem(rand(1,3)),
         randomLorem(rand(10,200))
-        )
+    )
 }
 
 function copyContentToOffcanvas() {
